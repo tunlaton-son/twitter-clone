@@ -9,7 +9,7 @@ export default function Home() {
     <>
       
         <Header label="Home"/>
-        <div className="mt-20">
+        <div className="mt-5">
         <Form placeholder="What's happening?"/>
         <PostFeed />
         </div>

@@ -24,7 +24,7 @@ const PostView = () => {
     return ( 
         <>
         <Header label="Tweet" showBackArrow/>
-        <div className="mt-20 mb-[100px]">
+        <div className="mt-5 mb-[100px]">
             <PostItem data={fetchedPost} />
             <Form 
             postId={postId as string}
