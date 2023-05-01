@@ -16,7 +16,7 @@ const Header: React.FC<HeaderProps> = ({ label, showBackArrow }) => {
    }, [router]);
 
     return ( 
-        <div className="border-b-[1px] border-neutral-800 p-5 fixed top-0 w-full bg-black z-10 opacity-90">
+        <div className="border-b-[1px] border-neutral-800 p-5 sticky top-0 bg-black opacity-90 z-10">
             <div className="flex flex-row items-center gap-2">
                 {
                     showBackArrow && (
