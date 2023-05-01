@@ -11,7 +11,7 @@ const PostFeed: React.FC<PostFeedProps> = ({userId}) => {
     const { data: posts =[] } = usePosts(userId);
     return ( 
        <>
-        <div className="mb-20"> 
+        <div className="sm:overflow-y-auto mb-[100px]"> 
             {posts.map((post: Record<string, any>) =>(
                 <PostItem
                 userId={userId}

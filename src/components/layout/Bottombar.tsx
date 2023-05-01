@@ -48,6 +48,7 @@ const BottomBar = () => {
                             opacity-90
                             mt-auto
                             h-auto
+                    
                             '>
                 {items.map((item) =>(
                     <SidebarItem

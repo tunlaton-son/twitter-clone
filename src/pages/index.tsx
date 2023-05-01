@@ -8,10 +8,11 @@ export default function Home() {
   return (
     <>
       
+        <div className="mt-20">
         <Header label="Home"/>
         <Form placeholder="What's happening?"/>
         <PostFeed />
-      
+        </div>
     </>
   )
 }

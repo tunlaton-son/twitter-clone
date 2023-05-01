@@ -19,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <RegisterModal/>
       <LoginModal />
      
-      <div className="sm:flex flex-col overflow-y-scroll justify-between"> 
+      <div className="sm:h-full"> 
         <Layout>
           <Component {...pageProps} />
         </Layout>
