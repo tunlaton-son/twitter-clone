@@ -19,11 +19,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <RegisterModal/>
       <LoginModal />
      
-      <div className="sm:flex flex-col overflow-y-scroll"> 
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <BottomBar />
+      <div className="sm:flex flex-col overflow-y-scroll justify-between"> 
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <BottomBar />
       </div>
       </SessionProvider>
     </>

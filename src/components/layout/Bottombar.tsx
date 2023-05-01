@@ -38,7 +38,7 @@ const BottomBar = () => {
             <div className='flex 
                             flex-row 
                             justify-center 
-                            absolute 
+                            fixed
                             border-t-[1px]
                             border-neutral-800 
                             inset-x-0 
