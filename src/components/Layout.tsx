@@ -1,5 +1,7 @@
 import Sidebar from "./layout/Sidebar";
 import FollowBar from "./layout/FollowBar";
+import BottomBar from "./layout/Bottombar";
+
 
 interface LayoutProps {
     children:React.ReactNode;
@@ -7,12 +9,12 @@ interface LayoutProps {
 
 const Layout:React.FC<LayoutProps> = ({children}) => {
     return ( 
-    <div className="h-screen bg-black">
+    <div className="h-screen bg-black ">
         <div className="container h-full mx-auto xl:px-30 max-w-6xl">
             <div className="grid grid-cols-4 h-full">
                 <Sidebar />
                 <div className="
-                  col-span-3
+                  col-span-4
                   lg:col-span-2
                   border-x-[1px]
                   boder-neutral-800
@@ -21,7 +23,9 @@ const Layout:React.FC<LayoutProps> = ({children}) => {
                 </div>
                 <FollowBar />
             </div>
+           
         </div>
+        
     </div> 
     );
 }
