@@ -20,7 +20,8 @@ const BottomBar = () => {
             label: 'Notifications',
             href:'/notifications',
             icon: BsBellFill,
-            auth: true
+            auth: true,
+            alert: currentUser?.hasNotification,
         },
         {
             label: 'Profile',
@@ -57,6 +58,7 @@ const BottomBar = () => {
                         href={item.href}
                         icon={item.icon}
                         auth={item.auth}
+                        alert={item.alert}
                     />
                 ))}
                 {currentUser && (
