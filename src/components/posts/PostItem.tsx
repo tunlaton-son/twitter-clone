@@ -64,7 +64,7 @@ const PostItem: React.FC<PostItemProps> = ({data, userId, isImagePreview}) => {
         imagePreviewModal.onOpen(base64, postData); 
     }, [imagePreviewModal]);
 
-    const { data: fetchedPost, isLoading } = usePost(data?.id as string);
+    // const { data: fetchedPost, isLoading } = usePost(data?.id as string);
  
     return ( 
         <div
@@ -119,7 +119,7 @@ const PostItem: React.FC<PostItemProps> = ({data, userId, isImagePreview}) => {
                                 data.postImages.map((base64:any, index:number) => (
                                     
                                             <Image
-                                                onClick={(e) => onOpenImagePreview(e,base64, fetchedPost)}
+                                                onClick={(e) => onOpenImagePreview(e,base64, data)}
                                                 className="rounded-xl mt-1"
                                                 key={index}
                                                 src={base64}

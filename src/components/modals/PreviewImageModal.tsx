@@ -4,10 +4,12 @@ import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { signIn } from "next-auth/react"; 
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Input from "../Input";
 import usePreviewImageModal from "@/hooks/usePreviewImageModal";
+import usePost from "@/hooks/usePost";
+import { ClipLoader } from "react-spinners";
 
 const PreviewImageModal = () => {
 
@@ -29,6 +31,7 @@ const PreviewImageModal = () => {
         registerModal.onClose();
         loginModal.onOpen();
     }, [isLoading, registerModal, loginModal]);
+   
 
     const onSubmit = useCallback(async () => {
         try{

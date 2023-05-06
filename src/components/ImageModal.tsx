@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { AiOutlineClose} from "react-icons/ai";
 
 import Button from "./Button";
@@ -35,6 +35,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
     base64,
     postData
 }) => {
+    
+    let { data: fetchedPost, isLoading } = usePost(postData?.id as string);
 
     const handleClose = useCallback(() => {
         if(disabled){
@@ -52,13 +54,21 @@ const ImageModal: React.FC<ImageModalProps> = ({
         onSubmit();
     }, [disabled, onSubmit]);
 
-    console.log(base64);
-
     if(!isOpen){
         return null;
     }
-    // const { data: fetchedPost, isLoading } = usePost(postData?.id as string);
 
+    
+
+    if(isLoading || !fetchedPost){
+        return(
+            <div className="flex justify-center items-center h-full">
+                <ClipLoader color="lightblue" size={80}/>
+            </div>
+        )
+    }
+
+    
     return ( 
        <>
         <div
@@ -142,13 +152,13 @@ const ImageModal: React.FC<ImageModalProps> = ({
                         </div>
                         <div className="p-5 bg-black h-full overflow-y-auto hidden lg:block">
                             <div className="mt-5 mb-[100px]">
-                                <PostItem data={postData} isImagePreview/>
+                                <PostItem data={fetchedPost} isImagePreview/>
                                 <Form 
-                                postId={postData.id as string}
+                                postId={fetchedPost.id as string}
                                 isComment
                                 placeholder="Tweet your reply"
                                 />
-                                <CommentFeed comments={postData?.comments}/>
+                                <CommentFeed comments={fetchedPost?.comments}/>
                             </div>
                         </div>
                     </div>

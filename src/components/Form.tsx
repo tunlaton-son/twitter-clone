@@ -12,6 +12,7 @@ import {BsFillImageFill} from "react-icons/bs";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { FaMinus } from "react-icons/fa";
+import usePreviewImageModal from "@/hooks/usePreviewImageModal";
 
 interface FormProps {
     placeholder: string;
@@ -31,6 +32,7 @@ const Form:React.FC<FormProps> = ({
     const {data: currentUser} = useCurrentUser();
     const {mutate: mutatePosts} = usePosts();
     const {mutate: mutatePost} = usePost(postId as string);
+    const previewImageModal = usePreviewImageModal();
 
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
