@@ -10,7 +10,7 @@ const FollowingView = () => {
 
     return ( 
         <>
-        <Header label="Followers" showBackArrow/>
+        <Header label="Following" showBackArrow/>
         <FollowingFeed userId={userId as string} />
         </>
         
