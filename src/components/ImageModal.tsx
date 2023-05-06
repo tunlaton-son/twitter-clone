@@ -52,11 +52,13 @@ const ImageModal: React.FC<ImageModalProps> = ({
         onSubmit();
     }, [disabled, onSubmit]);
 
+    console.log(base64);
+
     if(!isOpen){
         return null;
     }
+    // const { data: fetchedPost, isLoading } = usePost(postData?.id as string);
 
-    console.log(postData.comments);
     return ( 
        <>
         <div
@@ -126,7 +128,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
                         >
                             <AiOutlineClose size={20}/>
                         </button>
-                    <div className="text-white w-full h-full flex grid grid-flow-row-dense grid-cols-3  ">
+                    <div className="text-white w-full h-full flex grid grid-flow-row-dense lg:grid-cols-3  ">
                         <div className="col-span-2 p-5 flex justify-center items-center h-full">
                             
 
