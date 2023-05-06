@@ -9,6 +9,7 @@ import EditModal from '@/components/modals/EditModals';
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import BottomBar from "@/components/layout/Bottombar";
+import PreviewImageModal from "@/components/modals/PreviewImageModal";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <EditModal/>
       <RegisterModal/>
       <LoginModal />
-     
+      <PreviewImageModal/>
       <div className="sm:h-full"> 
         <Layout>
           <Component {...pageProps} />

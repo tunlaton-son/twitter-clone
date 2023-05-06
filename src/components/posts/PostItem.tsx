@@ -7,13 +7,15 @@ import Avatar from "../Avatar";
 import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
 import useLike from "@/hooks/useLike";
 import Image from "next/image";
+import usePreviewImageModal from "@/hooks/usePreviewImageModal";
 
 interface PostItemProps {
     userId?:string;
-    data:Record<string, any>
+    data:Record<string, any>,
+    isImagePreview?: boolean
 }
 
-const PostItem: React.FC<PostItemProps> = ({data, userId}) => {
+const PostItem: React.FC<PostItemProps> = ({data, userId, isImagePreview}) => {
 
    const router = useRouter();
    const loginModal = useLoginModal();
@@ -28,8 +30,8 @@ const PostItem: React.FC<PostItemProps> = ({data, userId}) => {
      router.push(`/users/${data.user.id}`);
    },[router, data.user.id]);
 
-   const goToPost = useCallback(() => {
-
+   const goToPost = useCallback((event: any) => {
+    event.stopPropagation();
     router.push(`/posts/${data.id}`);
    }, [router, data.id]);
 
@@ -52,6 +54,13 @@ const PostItem: React.FC<PostItemProps> = ({data, userId}) => {
    }, [data?.createdAt]); 
 
    const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
+
+   const imagePreviewModal = usePreviewImageModal();
+
+    const onOpenImagePreview = useCallback((base64:string, postData:Record<string, any>) => {
+
+        imagePreviewModal.onOpen(base64, postData); 
+    }, [imagePreviewModal]);
  
     return ( 
         <div
@@ -102,10 +111,11 @@ const PostItem: React.FC<PostItemProps> = ({data, userId}) => {
                <div>
                     <div className="flex flex-col items-center h-auto overflow-y-auto m-2 ">
                     {
-                            data.postImages ? (
+                            data.postImages && !isImagePreview ? (
                                 data.postImages.map((base64:any, index:number) => (
                                     
                                             <Image
+                                                onClick={() => onOpenImagePreview(base64, data)}
                                                 className="rounded-xl mt-1"
                                                 key={index}
                                                 src={base64}
