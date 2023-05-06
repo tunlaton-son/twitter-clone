@@ -6,6 +6,7 @@ import { useCallback, useMemo } from "react";
 import Avatar from "../Avatar";
 import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
 import useLike from "@/hooks/useLike";
+import Image from "next/image";
 
 interface PostItemProps {
     userId?:string;
@@ -95,8 +96,31 @@ const PostItem: React.FC<PostItemProps> = ({data, userId}) => {
                         {createdAt}
                     </span>
                 </div>
-                <div className="text-white mt-1">
+                <div className="text-white mt-1 w-full">
                    {data.body} 
+                </div>
+               <div>
+                    <div className="flex flex-col items-center h-auto overflow-y-auto m-2 ">
+                    {
+                            data.postImages ? (
+                                data.postImages.map((base64:any, index:number) => (
+                                    
+                                            <Image
+                                                className="rounded-xl mt-1"
+                                                key={index}
+                                                src={base64}
+                                                width={404}
+                                                height={404}
+                                                alt="Uploaded image"
+                                            />
+                                    
+                                    ))
+                                        
+                                    ):(
+                                        <p className="text-white"></p>
+                                    )
+                                }
+                    </div>
                 </div>
                 <div className="flex flex-row items-center mt-3 gap-10">
                     <div

@@ -3,11 +3,15 @@ import useLoginModal from "@/hooks/useLoginModal";
 import usePosts from "@/hooks/usePosts";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import Button from "./Button";
 import Avatar from "./Avatar";
 import usePost from "@/hooks/usePost";
+import {BsFillImageFill} from "react-icons/bs";
+import { useDropzone } from "react-dropzone";
+import Image from "next/image";
+import { FaMinus } from "react-icons/fa";
 
 interface FormProps {
     placeholder: string;
@@ -30,6 +34,8 @@ const Form:React.FC<FormProps> = ({
 
     const [body, setBody] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [postImages, setPostImages] = useState<string[]>([]);
+
 
     const onSubmit = useCallback( async () =>{
         try{
@@ -37,11 +43,12 @@ const Form:React.FC<FormProps> = ({
 
             const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
 
-            await axios.post(url, { body });
+            await axios.post(url, { body, postImages });
 
             toast.success("Tweet Created!");
 
             setBody("");
+            setPostImages([]);
             mutatePosts();
             mutatePost();
 
@@ -52,6 +59,42 @@ const Form:React.FC<FormProps> = ({
             setIsLoading(false);
         }
     }, [body, mutatePosts, mutatePost]);
+
+    const handleFileChosen = async (file:any) => {
+        return new Promise((resolve, reject) => {
+          let fileReader = new FileReader();
+          fileReader.onload = (event:any) => {
+            resolve(fileReader.result);
+            setPostImages([...postImages, event.target.result]);
+          };
+          fileReader.onerror = reject;
+          fileReader.readAsDataURL(file);
+        });
+      }
+
+    const handleDrop = useCallback( async (files: any) => {
+        const results = await Promise.all(files.map(async (file:any) => {
+            const fileContents = await handleFileChosen(file);
+            return fileContents;
+          }));
+    }, [postImages]);
+
+    const { getRootProps, getInputProps } = useDropzone({
+        maxFiles: 4,
+        multiple:true,
+        onDrop: handleDrop,
+        accept: {
+            "image/jpeg": [],
+            "image/png": []
+        }
+    });
+
+    const handleDelete = useCallback((image:string) => {
+       
+        setPostImages(postImages.filter(item => item !== image));
+    },[postImages]);
+    
+  
 
     return ( 
         <div className="border-b-[1px] border-neutral-800 px-5 py-2">
@@ -81,6 +124,36 @@ const Form:React.FC<FormProps> = ({
                             placeholder={placeholder}
                         >
                         </textarea>
+                        <div className="grid grid-cols-2 gap-2">
+                            {
+                            postImages ? (
+                                postImages.map((base64:any, index) => (
+                                    <div className="relative">
+                                        <div className="absolute top-3 left-3 z-10 rounded-full bg-[#4b4f53]  w-[34px] h-[34px] flex items-center justify-center cursor-pointer hover:opacity-80">
+                                            <FaMinus
+                                            color="white"
+                                            key={index}
+                                            onClick={() => handleDelete(base64)}
+                                            />
+                                        </div>
+                                        <Image
+                                            className="h-auto max-w-full rounded-lg m-2"
+                                            key={index}
+                                            src={base64}
+                                            height="245"
+                                            width="245"
+                                            alt="Uploaded image"
+                                        />
+                                        
+                                    </div>
+                                
+                                ))
+                                    
+                                ):(
+                                    <p className="text-white"></p>
+                                )
+                            }
+                         </div>
                         <hr
                             className="
                              opacity-0
@@ -91,12 +164,31 @@ const Form:React.FC<FormProps> = ({
                              transition
                             "
                         />
-                        <div className="mt-4 flex flex-row justify-end">
-                            <Button 
-                             disabled={isLoading || !body}
-                             onClick={onSubmit}
-                             label="Tweet"/>
+                       
+                        <div className="mt-4 flex flew-row w-full">
+                            <div className="mt-4 flex flex-row justify-start w-full items-center">
+                                <div
+                                 {...getRootProps({
+                                    className: "rounded-full hover:bg-[#1D9BF0]/[0.1]  hover:transition w-[44px] h-[44px] flex items-center justify-center cursor-pointer duration-[200ms]"
+                                })}
+                                >
+                                    <BsFillImageFill
+                                    color="#0ea5e9"
+                                    className=" opacity-100 hover:opacity-100"
+                                    size={15}
+                                    />
+                                      <input onChange={handleDrop} {...getInputProps()}/>
+                                </div>
+                           
+                            </div>
+                            <div className="mt-4 flex flex-row justify-end">
+                                <Button 
+                                disabled={isLoading || !body}
+                                onClick={onSubmit}
+                                label="Tweet"/>
+                            </div>
                         </div>
+                       
                     </div>    
                 </div>
             ):(

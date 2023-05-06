@@ -31,6 +31,8 @@ const Avatar: React.FC<AvatarProps> = ({
           ${hasBorder ? "border-4 border-black" : ""}
           ${isLarge ? "h-32" : "h-12"}
           ${isLarge ? "w-32" : "w-12"}
+          ${isLarge ? "min-h-32" : "min-h-12"}
+          ${isLarge ? "min-w-32": "min-w-12"}
           rounded-full
           hover:opacity-90
           transition
