@@ -128,17 +128,17 @@ const Form:React.FC<FormProps> = ({
                             {
                             postImages ? (
                                 postImages.map((base64:any, index) => (
-                                    <div className="relative">
+                                    <div className="relative" key={index}>
                                         <div className="absolute top-3 left-3 z-10 rounded-full bg-[#4b4f53]  w-[34px] h-[34px] flex items-center justify-center cursor-pointer hover:opacity-80">
                                             <FaMinus
                                             color="white"
-                                            key={index}
+                                        
                                             onClick={() => handleDelete(base64)}
                                             />
                                         </div>
                                         <Image
                                             className="h-auto max-w-full rounded-lg m-2"
-                                            key={index}
+                                            
                                             src={base64}
                                             height="245"
                                             width="245"
