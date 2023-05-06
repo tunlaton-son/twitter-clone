@@ -52,13 +52,11 @@ const ImageModal: React.FC<ImageModalProps> = ({
         onSubmit();
     }, [disabled, onSubmit]);
 
-    console.log(base64);
-
     if(!isOpen){
         return null;
     }
-    // const { data: fetchedPost, isLoading } = usePost(postId as string);
 
+    console.log(postData.comments);
     return ( 
        <>
         <div

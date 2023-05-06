@@ -8,6 +8,7 @@ import { AiOutlineHeart, AiFillHeart, AiOutlineMessage } from "react-icons/ai";
 import useLike from "@/hooks/useLike";
 import Image from "next/image";
 import usePreviewImageModal from "@/hooks/usePreviewImageModal";
+import usePost from "@/hooks/usePost";
 
 interface PostItemProps {
     userId?:string;
@@ -57,10 +58,13 @@ const PostItem: React.FC<PostItemProps> = ({data, userId, isImagePreview}) => {
 
    const imagePreviewModal = usePreviewImageModal();
 
-    const onOpenImagePreview = useCallback((base64:string, postData:Record<string, any>) => {
+    const onOpenImagePreview = useCallback((event:any, base64:string, postData:Record<string, any>) => {
+        event.stopPropagation();
 
         imagePreviewModal.onOpen(base64, postData); 
     }, [imagePreviewModal]);
+
+    const { data: fetchedPost, isLoading } = usePost(data?.id as string);
  
     return ( 
         <div
@@ -115,7 +119,7 @@ const PostItem: React.FC<PostItemProps> = ({data, userId, isImagePreview}) => {
                                 data.postImages.map((base64:any, index:number) => (
                                     
                                             <Image
-                                                onClick={() => onOpenImagePreview(base64, data)}
+                                                onClick={(e) => onOpenImagePreview(e,base64, fetchedPost)}
                                                 className="rounded-xl mt-1"
                                                 key={index}
                                                 src={base64}
