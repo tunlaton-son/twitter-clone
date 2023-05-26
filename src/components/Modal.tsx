@@ -12,6 +12,7 @@ interface ModalProps {
     footer?: React.ReactElement;
     actionLabel: string;
     disabled?: boolean;
+    isHideFooter?:boolean;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -22,7 +23,8 @@ const Modal: React.FC<ModalProps> = ({
     body,
     footer,
     actionLabel,
-    disabled
+    disabled,
+    isHideFooter
 }) => {
 
     const handleClose = useCallback(() => {
@@ -121,7 +123,7 @@ const Modal: React.FC<ModalProps> = ({
                     {body}
                 </div>
                 {/** Footerr */}
-                <div className="flex flex-col gap-2 p-10">
+                <div className={isHideFooter ? "hidden":"flex flex-col gap-2 p-10"}>
                     <Button  
                         disabled={disabled} 
                         label={actionLabel} 

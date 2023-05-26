@@ -13,6 +13,7 @@ import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 import { FaMinus } from "react-icons/fa";
 import usePreviewImageModal from "@/hooks/usePreviewImageModal";
+import useTweetModal from "@/hooks/useTweetModal";
 
 interface FormProps {
     placeholder: string;
@@ -38,6 +39,8 @@ const Form:React.FC<FormProps> = ({
     const [isLoading, setIsLoading] = useState(false);
     const [postImages, setPostImages] = useState<string[]>([]);
 
+    const tweetModal = useTweetModal();
+
 
     const onSubmit = useCallback( async () =>{
         try{
@@ -53,6 +56,7 @@ const Form:React.FC<FormProps> = ({
             setPostImages([]);
             mutatePosts();
             mutatePost();
+            tweetModal.onClose();
 
         }catch(error){
             toast.error("Something went wrong")
